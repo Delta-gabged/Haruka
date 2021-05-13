@@ -36,10 +36,12 @@ bot = commands.Bot(command_prefix=['$'],
                    description="I may just be a bot, but I really do love my big sister Kanata! For questions about Haruka please visit 'https://discord​​.gg/qp7nuPC' or DM `Junior Mints#2525`",
                    case_insensitive=True, intents=intents)
 
-cogList = ['cogs.administration', 'cogs.fun', 'cogs.guildFunctions',
-           'cogs.events', 'cogs.setup', 'cogs.music', 'cogs.scheduler']
-cogNames = ['Music', 'Administration', 'Fun',
-            'GuildFunctions', 'Events', 'Setup', 'Scheduler']
+# cogList = ['cogs.administration', 'cogs.fun', 'cogs.guildFunctions',
+#            'cogs.events', 'cogs.setup', 'cogs.music', 'cogs.scheduler']
+# cogNames = ['Music', 'Administration', 'Fun',
+#             'GuildFunctions', 'Events', 'Setup', 'Scheduler']
+cogList = ['cogs.guildFunctions']
+cogNames = ['GuildFunctions']
 with open('Resources.yaml', "r") as file:
 	bot.config = yaml.full_load(file)
 bot.messageHandler = messageHandler.MessageHandler(bot.config, bot)

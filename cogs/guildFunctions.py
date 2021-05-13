@@ -393,6 +393,11 @@ class GuildFunctions(commands.Cog):
 		await self.setRole(ctx, roleNames, role)
 
 	@ commands.command()
+	async def whois(self, ctx, *, user=None):
+		print("stub command")
+		print("user: " + str(user))
+
+	@ commands.command()
 	@ checks.is_niji()
 	async def sub(self, ctx, *, role):
 		"""Show your support for your favorite subunit! Ex. '$sub QU4RTZ' will give you the QU4RTZ role. '$sub clear' will clear your role."""
