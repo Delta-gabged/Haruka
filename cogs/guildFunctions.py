@@ -393,9 +393,23 @@ class GuildFunctions(commands.Cog):
 		await self.setRole(ctx, roleNames, role)
 
 	@ commands.command()
-	async def whois(self, ctx, *, user=None):
+	async def whois(self, ctx, *, user: discord.User = None):
 		print("stub command")
 		print("user: " + str(user))
+		_guild = ctx.message.guild.id
+		if not (
+			("introChannel" in self.bot.config)
+			and (_guild in self.bot.config["introChannel"])
+		):
+			await ctx.send("Error! :(")
+
+		_chid = self.bot.config["introChannel"][_guild]["channel"]
+		_ch = self.bot.get_channel(_chid)
+		async for msg in _ch.history(limit=10000):
+			if msg.author == user:
+				await ctx.send(msg.content)
+
+		# TODO: find longest message, attempt search by name
 
 	@ commands.command()
 	@ checks.is_niji()
