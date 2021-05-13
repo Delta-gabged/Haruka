@@ -1,0 +1,23 @@
+---
+girls:
+- Ai
+- Setsuna
+- Emma
+- Karin
+- Ayumi
+- Shizuku
+- Rina
+- Kanata
+- Kasumi
+rulesCh: 842426854064390144
+generalCh: 842416834158002188
+logCh: 842426920666136587
+welcome: Welcome {0} to the Nijigasaki High School Idol Club! Please read the {1}
+  and feel free to introduce yourself!
+nijiCord: 842416831449006130
+ModBotCH: 842426967286349844
+roleChannel:
+  842416831449006130:
+    channel: 842429148848455720
+rates: 0.5/0.8
+owner: 147009512614658048
