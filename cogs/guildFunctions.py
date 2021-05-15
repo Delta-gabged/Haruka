@@ -392,24 +392,50 @@ class GuildFunctions(commands.Cog):
 			return
 		await self.setRole(ctx, roleNames, role)
 
+
 	@ commands.command()
-	async def whois(self, ctx, *, user: discord.User = None):
-		print("stub command")
-		print("user: " + str(user))
+	async def whois(self, ctx, *, user: Union[discord.User, str] = None):
+		"""Want to quickly find out who a user is? Just type '$whois name_of_user' to find their introduction message!"""
+		if user is None:
+			await ctx.send("Please provide the name of the user of interest")
+			return
+
 		_guild = ctx.message.guild.id
 		if not (
 			("introChannel" in self.bot.config)
 			and (_guild in self.bot.config["introChannel"])
 		):
-			await ctx.send("Error! :(")
+			await ctx.send("Error! Introductions channel not found :(")
+			return
+
+		# Find a user by name (if a string is passed)
+		if not isinstance(user, discord.User):
+			_user_matches = list(filter(
+				lambda u: (
+					(user.lower() in u.name.lower())
+					or (user.lower() in u.display_name.lower())
+				),
+				ctx.message.guild.members
+			))
+
+			# If more than 1 match found, pls clarify
+			if len(_user_matches) > 1:
+				output_msg = "Please be more specific! Did you mean:\n"
+				for _u in _user_matches:
+					output_msg += "\t{} ({})\n".format(_u.display_name, _u.name)
+				await ctx.send(output_msg)
+			elif len(_user_matches) == 0:
+				await ctx.send("User not found")
+			else:
+				user = _user_matches[0]
 
 		_chid = self.bot.config["introChannel"][_guild]["channel"]
 		_ch = self.bot.get_channel(_chid)
 		async for msg in _ch.history(limit=10000):
 			if msg.author == user:
 				await ctx.send(msg.content)
+				return
 
-		# TODO: find longest message, attempt search by name
 
 	@ commands.command()
 	@ checks.is_niji()
