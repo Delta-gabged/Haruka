@@ -424,17 +424,20 @@ class GuildFunctions(commands.Cog):
 				for _u in _user_matches:
 					output_msg += "\t{} ({})\n".format(_u.display_name, _u.name)
 				await ctx.send(output_msg)
+				return
 			elif len(_user_matches) == 0:
 				await ctx.send("User not found")
+				return
 			else:
 				user = _user_matches[0]
 
 		_chid = self.bot.config["introChannel"][_guild]["channel"]
 		_ch = self.bot.get_channel(_chid)
-		async for msg in _ch.history(limit=10000):
-			if msg.author == user:
-				await ctx.send(msg.content)
-				return
+		async with ctx.typing():
+			async for msg in _ch.history(limit=10000):
+				if msg.author == user:
+					await ctx.send(msg.content)
+					return
 
 
 	@ commands.command()
