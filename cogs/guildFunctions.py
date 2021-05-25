@@ -436,7 +436,8 @@ class GuildFunctions(commands.Cog):
 		async with ctx.typing():
 			async for msg in _ch.history(limit=10000):
 				if msg.author == user:
-					await ctx.send(msg.content)
+					msg_suppressed = utils.suppress_links(msg.content)
+					await ctx.send(msg_suppressed)
 					return
 
 

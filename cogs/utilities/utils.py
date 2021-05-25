@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import random
 import time
+import re
 
 import discord
 import pytz
@@ -117,3 +118,7 @@ def getInstaEmbed(token, url):
 		embd.timestamp = timestamp[1] 
 	return embd
 
+def suppress_links(msg):
+	"""Given a message, will find links using regex and surround them with <>"""
+	linkRegex = re.compile(r'((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/\S*)?)+')
+	return re.sub(linkRegex, r'<\1>', msg)
